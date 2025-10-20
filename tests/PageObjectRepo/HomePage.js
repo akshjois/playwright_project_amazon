@@ -14,6 +14,7 @@ class NavigateMainPage {
 
     async goTo() {
         await this.page.goto("https://www.amazon.in/");
+        await this.page.waitForLoadState("domcontentloaded");
      } 
 
     async waitforproducts(){
