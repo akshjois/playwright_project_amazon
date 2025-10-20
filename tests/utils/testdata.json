@@ -1,0 +1,14 @@
+{
+  "productDetails": {
+    "searchText": "iphone",
+    "ItemName": "Apple iPhone 15 (128 GB) - Black"
+  },
+  "signInCred":{
+    "username":"akshatha6557@gmail.com",
+    "password":"aksh47atha"
+  },
+  "invalidSignInCred":{
+    "username":"akshatha6556@gmail.com",
+    "password":"aksh47ath1"
+  }
+}
