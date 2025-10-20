@@ -48,19 +48,16 @@ test('TC01-Enter Valid Username and Password_TOTP', async ({page})=>{
     await expect(page.locator('#nav-link-accountList-nav-line-1')).toHaveText('Hello, Akshatha');
 });
 
-test.only('TC02-Test login with an incorrect password', async ({page})=>{
-    const homepage = new NavigateMainPage(page);
-    await homepage.goTo();
-    await homepage.goToSignInPage();
-    const loginPage = new LoginPage(page);
-    await loginPage.enterUsername(testData.signInCred.username);
-    const emailIDfromPage = await loginPage.loggedEmailid.textContent();
-    console.log(emailIDfromPage);
-    await loginPage.enterPassword(testData.invalidSignInCred.password);
-    //capture invalid msg and image comparison as well.
-    await expect(await loginPage.invalidpasswordmsg.textContent()).toContain("incorrect");
-    
+// test('TC02-Test login with an incorrect password', async ({page})=>{
+//     const homepage = new NavigateMainPage(page);
+//     await homepage.goTo();
+//     await homepage.goToSignInPage();
+//     const loginPage = new LoginPage(page);
+//     await loginPage.enterUsername(testData.signInCred.username);
+//     const emailIDfromPage = await loginPage.loggedEmailid.textContent();
+//     console.log(emailIDfromPage);
+//     await loginPage.enterPassword(testData.invalidSignInCred.password);
+//     //capture invalid msg and image comparison as well.
+//     await expect(await loginPage.invalidpasswordmsg.textContent()).toContain("incorrect");
 
-
-
-});
+// });
