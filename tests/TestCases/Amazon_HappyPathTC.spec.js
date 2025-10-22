@@ -54,11 +54,12 @@ test("TC04-Add particular product to Cart using Child window", async ({ browser 
 
     // The product was opened in a child page (newPage). Use that Page for title checks and cart interactions
     const productPage = new ProductPage(newPage);
-    await productPage.addToCart(newPage);
+   // await productPage.waitForLoadState('domcontentloaded');
+    await productPage.addToCart();
     // Wait for the product page (child) to reflect the add-to-cart confirmation
     await newPage.waitForLoadState('domcontentloaded');
     await expect(productPage.confirmMessage).toBeVisible();
-    if (await productPage.goToCartbtn.isVisible()) {
+    if (await productPage.goToCartbtn.isVisible) {
       console.log('Go to cart button is visible');
       // Clicking the 'Go to Cart' link will navigate the child page to the cart
       await productPage.goToCartbtn.click();

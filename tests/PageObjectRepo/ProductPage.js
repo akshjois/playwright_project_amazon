@@ -6,7 +6,7 @@ class ProductPage{
         this.goToCartbtn = page.getByRole('link', { name: 'Go to Cart' }).nth(1);
     }
 
-    async addToCart(page) {
+    async addToCart() {
         await this.addTocart.click();
     }
 }

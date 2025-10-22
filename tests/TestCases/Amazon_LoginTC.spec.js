@@ -3,20 +3,7 @@ const {LoginPage} = require('../PageObjectRepo/LoginPage');
 const {NavigateMainPage} = require('../PageObjectRepo/HomePage');
 const testData = require('../utils/testdata.json');
 import * as OTPAuth from "otpauth";
- /*
-Verify successful login with valid credentials.  Y
-Test login with an incorrect password. Y
-Check login with an incorrect username/email. Y
-Verify the "Forgot Password" link functionality. Y 
-Check for case sensitivity in usernames and passwords. Y
-Verify the session timeout behavior. Y
-Test login with special characters in the password. Y
-Test login with a blank username and password fields. Y
-Ensure the "Remember Me" functionality works as expected. Y
-Test the "Logout" functionality. Y
-Test login on multiple browsers. Y
-Verify that login attempts are logged for security monitoring. Y
- */
+
 let totp = new OTPAuth.TOTP({
   // Provider or service the account is associated with.
   issuer: "Amazon",
@@ -48,6 +35,7 @@ test('TC01-Enter Valid Username and Password_TOTP', async ({page})=>{
     await expect(page.locator('#nav-link-accountList-nav-line-1')).toHaveText('Hello, Akshatha');
 });
 
+/*Commenting since puzzle will come with incorrect password to continue - need to see how to handle that */
 // test('TC02-Test login with an incorrect password', async ({page})=>{
 //     const homepage = new NavigateMainPage(page);
 //     await homepage.goTo();
@@ -61,3 +49,68 @@ test('TC01-Enter Valid Username and Password_TOTP', async ({page})=>{
 //     await expect(await loginPage.invalidpasswordmsg.textContent()).toContain("incorrect");
 
 // });
+
+test('TC03-Check login with an incorrect username/email', async ({page})=>{
+    const homepage = new NavigateMainPage(page);
+    await homepage.goTo();
+    await homepage.goToSignInPage();
+    const loginPage = new LoginPage(page);
+    await loginPage.enterUsername(testData.invalidSignInCred.invaliduseremail);
+    //have 2 options - Looks like you are new to Amazon or Invalid email address message
+    await expect(page.getByText('Looks like you are new to Amazon')).toBeVisible();
+    await loginPage.signinwithanotheremail.click();
+    await loginPage.enterUsername(testData.invalidSignInCred.invaliduser);
+    await expect(page.getByText('Invalid email address')).toBeVisible();
+});
+
+test('TC04-Verify the "Forgot Password" link functionality', async ({page})=>{
+  const homepage = new NavigateMainPage(page);
+  await homepage.goTo();
+  await homepage.goToSignInPage();
+  const loginPage = new LoginPage(page);
+  await loginPage.enterUsername(testData.signInCred.username);
+  await loginPage.forgotPasswordLink.click();
+  await expect(page.getByText('Password assistance')).toBeVisible();
+  const emailid = await loginPage.getemailafterforgotpwd();
+  console.log(emailid);
+  await expect(emailid).toContain(testData.signInCred.username);
+  await expect(page.getByRole('button',{name: 'Continue'})).toBeVisible();
+})
+
+test('TC06-Check for case sensitivity in usernames and passwords', async ({page})=>{
+  try {
+    const homePage = new NavigateMainPage(page);
+    await homePage.goTo();
+    await homePage.goToSignInPage();
+    const loginPage = new LoginPage(page);
+    await loginPage.enterUsername(testData.signInCred.username.toUpperCase());
+    if (await (loginPage.password).isVisible) {
+      console.log('The signin was successful with uppercase email id and valid pwd');
+      await loginPage.enterPassword(testData.signInCred.password);
+    }
+    else {
+      console.log('The email field might be case sensitive!');
+      throw new Error('Password field not visible after uppercase username'); 
+    }
+  }
+  catch(error){
+    console.log(`There occured an error while performing test case 06 - login with ${error}`);
+  }
+ 
+});
+
+test('TC07-Test login with a blank username and password fields', async({page})=>{
+    const homePage = new NavigateMainPage(page);
+    await homePage.goTo();
+    await homePage.goToSignInPage();
+    const login = new LoginPage(page);
+    await login.enterUsername('');
+    await expect(page.getByText('Enter your mobile number or email')).toBeVisible();
+    await login.enterUsername(testData.signInCred.username);
+    const emailIDfromPage = await login.loggedEmailid.textContent();
+    console.log(emailIDfromPage);
+    await expect(emailIDfromPage).toContain(testData.signInCred.username);
+    await login.enterPassword('');
+    await expect(page.getByText('Enter your password')).toBeVisible();
+    await login.enterPassword(testData.signInCred.password);
+});

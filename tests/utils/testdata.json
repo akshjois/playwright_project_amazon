@@ -8,7 +8,8 @@
     "password":"aksh47atha"
   },
   "invalidSignInCred":{
-    "username":"akshatha6556@gmail.com",
+    "invaliduseremail":"akshatha6556@gmail.com",
+    "invaliduser": "akshatha6556",
     "password":"aksh47ath1"
   }
 }

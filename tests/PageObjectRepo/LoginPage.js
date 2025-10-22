@@ -15,6 +15,8 @@ class LoginPage {
         this.otpfield = page.locator('#auth-mfa-otpcode');
         this.authsigninbtn = page.locator('#auth-signin-button');
         this.invalidpasswordmsg = page.getByText("Your password is incorrect");
+        this.signinwithanotheremail = page.getByRole('link',{name: 'Sign in with another email or mobile'});
+        this.forgotpwdemail = page.locator('#ap_email');
     }
 
     async enterUsername(username){
@@ -33,6 +35,11 @@ class LoginPage {
     async mfaAuth(TOTP_key){
         await this.otpfield.fill(TOTP_key);
         await this.authsigninbtn.click();
+    }
+
+    async getemailafterforgotpwd(){
+        const emailid = await this.forgotpwdemail.inputValue();
+        return emailid;
     }
 }
 
