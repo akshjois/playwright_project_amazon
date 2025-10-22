@@ -11,8 +11,8 @@ export default defineConfig({
     timeout: 15000,
   },
   /* Run tests in files in parallel */
- // fullyParallel: false,
-  workers: 1,
+  fullyParallel: false,
+  //workers: 1,
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
