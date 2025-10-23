@@ -21,9 +21,9 @@ class LoginPage {
 
     async enterUsername(username){
         await this.username.fill(username);
-        if(await this.continueBtn.isVisible){
-          await this.continueBtn.click();
-        }
+                if(await this.continueBtn.isVisible()){
+                    await this.continueBtn.click();
+                }
     }
 
     async enterPassword(password){
