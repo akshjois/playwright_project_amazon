@@ -3,6 +3,8 @@ const { NavigateMainPage } = require('../PageObjectRepo/HomePage');
 const { ProductPage } = require('../PageObjectRepo/ProductPage');
 const { Cartpage } = require('../PageObjectRepo/CartPage');
 const testData = require('../utils/testdata.json');
+const XLSX = require('xlsx');
+const { read } = require('fs');
 
 test('TC01-Load Homepage and verify its state', async ({ page }) => {
   const mainPage = new NavigateMainPage(page); // create instance
@@ -54,7 +56,6 @@ test("TC04-Add particular product to Cart using Child window", async ({ browser 
 
     // The product was opened in a child page (newPage). Use that Page for title checks and cart interactions
     const productPage = new ProductPage(newPage);
-   // await productPage.waitForLoadState('domcontentloaded');
     await productPage.addToCart();
     // Wait for the product page (child) to reflect the add-to-cart confirmation
     await newPage.waitForLoadState('domcontentloaded');
@@ -95,3 +96,16 @@ test("TC05-Validate Cart count after adding product", async ({ page }) => {
   await cartpage.proceedtoBuyClick();
 
 })
+
+test("Read data from Excel file", async ({ page }) => {
+function readExcelData(filePath, sheetName) {
+  const workbook = XLSX.readFile(filePath);
+  const worksheet = workbook.Sheets[sheetName];
+
+  const jsonData = XLSX.utils.sheet_to_json(worksheet);
+  return jsonData;
+}
+const data = readExcelData('./tests/utils/testdata.xlsx', 'productDetails');
+// console.log(data.searchText);
+console.log(data.searchText);
+});

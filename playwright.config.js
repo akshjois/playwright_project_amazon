@@ -11,9 +11,11 @@ export default defineConfig({
     timeout: 15000,
   },
   /* Run tests in files in parallel */
-  fullyParallel: false,
-  //workers: 1,
+  //fullyParallel: true,
+  workers: 2,
   reporter: 'html',
+  retries: 1,
+ // reporter: [["line"], ["allure-playwright"]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */

@@ -114,3 +114,11 @@ test('TC07-Test login with a blank username and password fields', async({page})=
     await expect(page.getByText('Enter your password')).toBeVisible();
     await login.enterPassword(testData.signInCred.password);
 });
+
+test.describe('Random occurence of continue shopping page between test runs', () =>{
+  test.beforeEach('Click on continue shopping button', async({page})=>{
+      if(await page.getByRole('button',{name: 'Continue shopping'}.isVisible())){
+        await page.getByRole('button',{name: 'Continue shopping'}).click();
+      }
+  })
+})
