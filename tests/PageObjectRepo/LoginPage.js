@@ -41,6 +41,12 @@ class LoginPage {
         const emailid = await this.forgotpwdemail.inputValue();
         return emailid;
     }
+
+//      async Click_on_continue_shopping_button(){
+//       if(await this.page.getByRole('button',{name: 'Continue shopping'}.isVisible())){
+//         await this.page.getByRole('button',{name: 'Continue shopping'}).click();
+//       }
+//   }
 }
 
 module.exports = {LoginPage};

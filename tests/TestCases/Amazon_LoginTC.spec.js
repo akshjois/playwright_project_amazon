@@ -25,6 +25,7 @@ test('TC01-Enter Valid Username and Password_TOTP', async ({page})=>{
     await homepage.goTo();
     await homepage.goToSignInPage();
     const loginPage = new LoginPage(page);
+//    await loginPage.Click_on_continue_shopping_button();
     await loginPage.enterUsername(testData.signInCred.username);
     const emailIDfromPage = await loginPage.loggedEmailid.textContent();
     console.log(emailIDfromPage);
@@ -41,6 +42,7 @@ test('TC01-Enter Valid Username and Password_TOTP', async ({page})=>{
 //     await homepage.goTo();
 //     await homepage.goToSignInPage();
 //     const loginPage = new LoginPage(page);
+      //  await loginPage.Click_on_continue_shopping_button();
 //     await loginPage.enterUsername(testData.signInCred.username);
 //     const emailIDfromPage = await loginPage.loggedEmailid.textContent();
 //     console.log(emailIDfromPage);
@@ -55,6 +57,7 @@ test('TC03-Check login with an incorrect username/email', async ({page})=>{
     await homepage.goTo();
     await homepage.goToSignInPage();
     const loginPage = new LoginPage(page);
+ //   await loginPage.Click_on_continue_shopping_button();
     await loginPage.enterUsername(testData.invalidSignInCred.invaliduseremail);
     //have 2 options - Looks like you are new to Amazon or Invalid email address message
     await expect(page.getByText('Looks like you are new to Amazon')).toBeVisible();
@@ -68,6 +71,7 @@ test('TC04-Verify the "Forgot Password" link functionality', async ({page})=>{
   await homepage.goTo();
   await homepage.goToSignInPage();
   const loginPage = new LoginPage(page);
+//  await loginPage.Click_on_continue_shopping_button();
   await loginPage.enterUsername(testData.signInCred.username);
   await loginPage.forgotPasswordLink.click();
   await expect(page.getByText('Password assistance')).toBeVisible();
@@ -83,6 +87,7 @@ test('TC06-Check for case sensitivity in usernames and passwords', async ({page}
     await homePage.goTo();
     await homePage.goToSignInPage();
     const loginPage = new LoginPage(page);
+ //   await loginPage.Click_on_continue_shopping_button();
     await loginPage.enterUsername(testData.signInCred.username.toUpperCase());
     if (await (loginPage.password).isVisible) {
       console.log('The signin was successful with uppercase email id and valid pwd');
@@ -104,6 +109,7 @@ test('TC07-Test login with a blank username and password fields', async({page})=
     await homePage.goTo();
     await homePage.goToSignInPage();
     const login = new LoginPage(page);
+ //   await loginPage.Click_on_continue_shopping_button();
     await login.enterUsername('');
     await expect(page.getByText('Enter your mobile number or email')).toBeVisible();
     await login.enterUsername(testData.signInCred.username);
@@ -116,9 +122,14 @@ test('TC07-Test login with a blank username and password fields', async({page})=
 });
 
 test.describe('Random occurence of continue shopping page between test runs', () =>{
-  test.beforeEach('Click on continue shopping button', async({page})=>{
+  test.beforeEach('Click_on_continue_shopping_button',async ({page})=>{
       if(await page.getByRole('button',{name: 'Continue shopping'}.isVisible())){
+        console.log('Continue shopping button is visible and clicking on it');
         await page.getByRole('button',{name: 'Continue shopping'}).click();
       }
-  })
+      else{
+        console.log('Continue shopping button not visible');
+      }
+  });
 })
+

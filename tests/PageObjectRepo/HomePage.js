@@ -1,3 +1,5 @@
+const { expect } = require('@playwright/test');
+
 class NavigateMainPage {
 
     constructor(page) {
@@ -15,6 +17,7 @@ class NavigateMainPage {
     async goTo() {
         await this.page.goto("https://www.amazon.in/");
         await this.page.waitForLoadState("domcontentloaded");
+        await this.ClickonContinueShoppingButton();
      } 
 
     async waitforproducts(){
@@ -75,6 +78,16 @@ class NavigateMainPage {
       await this.signInBox.click();
       await this.signInbtnMain.click();
       await this.page.waitForLoadState('domcontentloaded');
+    }
+
+    async ClickonContinueShoppingButton(){
+      if(await (this.page.getByRole('button',{name: 'Continue shopping'})).isVisible()){
+          console.log('Continue shopping button is visible and clicking on it');
+        await this.page.getByRole('button',{name: 'Continue shopping'}).click();
+      }
+      else{
+        console.log('Continue shopping button not visible');
+      }
     }
 }
 
