@@ -6,7 +6,7 @@ import { Cartpage } from '../PageObjectRepo/CartPage.ts';
 import { getExcelCellValue } from '../utils/UtilsFunctions.ts';
 
 test('Use Excel data in another function', async () => {
-    const filePath = 'C:/Users/Akshatha/Playwright_Amazon_self/tests/utils/testdata.xlsx';
+    const filePath = 'tests/utils/testdata.xlsx';
     const sheetName = 'productDetails';
 
     // Fetch value from row 2, column 3
@@ -24,7 +24,7 @@ test('TC01-Load Homepage and verify its state', async ({ page }) => {
 });
 
 test("TC02-Search for a particular product", async ({ page }) => {
-    const filePath: string = 'C:/Users/Akshatha/Playwright_Amazon_self/tests/utils/testdata.xlsx';
+    const filePath: string = 'tests/utils/testdata.xlsx';
     const sheetName: string = 'productDetails';
 
     // Fetch value from row 2, column 1
@@ -47,7 +47,7 @@ test("TC02-Search for a particular product", async ({ page }) => {
 });
 
 test("TC03-Add particular product to Cart from homePage", async ({ page }) => {
-    const filePath: string = 'C:/Users/Akshatha/Playwright_Amazon_self/tests/utils/testdata.xlsx';
+    const filePath: string = 'tests/utils/testdata.xlsx';
     const sheetName: string = 'productDetails';
 
     // Fetch value from row 2, column 1
@@ -60,7 +60,7 @@ test("TC03-Add particular product to Cart from homePage", async ({ page }) => {
 });
 
 test("TC04-Add particular product to Cart using Child window", async ({ browser }) => {
-    const filePath: string = 'C:/Users/Akshatha/Playwright_Amazon_self/tests/utils/testdata.xlsx';
+    const filePath: string = 'tests/utils/testdata.xlsx';
     const sheetName: string = 'productDetails';
     const searchText: any = await getExcelCellValue(filePath, sheetName, 2, 1);
     const ItemName: any = await getExcelCellValue(filePath, sheetName, 2, 2);
@@ -105,7 +105,7 @@ test("TC04-Add particular product to Cart using Child window", async ({ browser 
 });
 
 test("TC05-Validate Cart count after adding product", async ({ page }) => {
-    const filePath: string = 'C:/Users/Akshatha/Playwright_Amazon_self/tests/utils/testdata.xlsx';
+    const filePath: string = 'tests/utils/testdata.xlsx';
     const sheetName: string = 'productDetails';
     const searchText: any = await getExcelCellValue(filePath, sheetName, 2, 1);
     const ItemName: any = await getExcelCellValue(filePath, sheetName, 2, 2);
