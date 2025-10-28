@@ -5,6 +5,39 @@ const { Cartpage } = require('../PageObjectRepo/CartPage');
 const testData = require('../utils/testdata.json');
 const XLSX = require('xlsx');
 const { read } = require('fs');
+const ExcelJS = require('exceljs');
+const { getExcelCellValue } = require('../utils/UtilsFunctions');
+
+
+test('Read data from Excel', async () => {
+    const workbook = new ExcelJS.Workbook();
+    await workbook.xlsx.readFile('C:/Users/Akshatha/Playwright_Amazon_self/tests/utils/testdata.xlsx');
+    const worksheet = workbook.getWorksheet('productDetails');
+    worksheet.eachRow((row, rowNumber) => {
+      if(rowNumber === 1) return; // Skip header row
+      row.eachCell((cell, colNumber) => {
+        console.log(`Row ${rowNumber} Column ${colNumber}: ${cell.value}`);
+      })
+    })
+
+    // for (let i = 2; i <= worksheet.rowCount; i++) {
+    // const row = worksheet.getRow(i);
+    // row.eachCell((cell, colNumber) => {
+    //     console.log(`Row ${i} Column ${colNumber}: ${cell.value}`);
+    // });
+      // } 
+
+});
+
+test('Use Excel data in another function', async ({}) => {
+    const filePath = 'C:/Users/Akshatha/Playwright_Amazon_self/tests/utils/testdata.xlsx';
+    const sheetName = 'productDetails';
+
+    // Fetch value from row 2, column 3
+    const value = await getExcelCellValue(filePath, sheetName, 2, 1);
+    console.log('Fetched Value:', value);
+});
+
 
 test('TC01-Load Homepage and verify its state', async ({ page }) => {
   const mainPage = new NavigateMainPage(page); // create instance

@@ -1,6 +1,7 @@
 // example.spec.js
 const { test, expect } = require('@playwright/test');
-const { query } = require('../utils/db'); // Adjust path if needed
+const { query } = require('./db'); // Adjust path if needed
+const ExcelJS = require('exceljs');
 
 // test.describe('Database Interactions in Playwright', () => {
 //   let initialProductCount;
@@ -36,3 +37,34 @@ const { query } = require('../utils/db'); // Adjust path if needed
 //     // For example, delete any remaining test data
 //   });
 // });
+
+
+// async function captureScreenshotAndAssert(page, assertionFunction, screenshotName) {
+//   await page.screenshot({ path: `screenshots/${screenshotName}_before.png` });
+//   await assertionFunction();
+//   await page.screenshot({ path: `screenshots/${screenshotName}_after.png` });
+// }
+
+// test('capture screenshot using helper function', async ({ page }) => {
+//   await page.goto('https://example.com');
+
+//   await captureScreenshotAndAssert(page, async () => {
+//     await expect(page).toHaveTitle(/Example Domain/);
+//   }, 'title_assertion');
+
+//   const element = page.locator('h1');
+//   await captureScreenshotAndAssert(page, async () => {
+//     await expect(element).toBeVisible();
+//   }, 'visibility_assertion');
+// });
+
+async function getExcelCellValue(filePath, sheetName, rowNumber, colNumber) {
+    const workbook = new ExcelJS.Workbook();
+    await workbook.xlsx.readFile(filePath);
+    const worksheet = workbook.getWorksheet(sheetName);
+    const row = worksheet.getRow(rowNumber);
+    const cell = row.getCell(colNumber);
+    return cell.value;
+}
+
+module.exports = { getExcelCellValue };

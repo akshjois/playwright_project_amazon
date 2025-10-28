@@ -13,10 +13,10 @@
     "@playwright/test": "^1.56.1",
     "@types/node": "^24.7.2",
     "allure-playwright": "^3.4.1",
+    "exceljs": "^4.4.0",
     "mysql2": "^3.15.3"
   },
   "dependencies": {
-    "exceljs": "^4.4.0",
     "otpauth": "^9.4.1",
     "xlsx": "^0.18.5"
   }
