@@ -11,7 +11,7 @@ const { getExcelCellValue } = require('../utils/UtilsFunctions');
 
 test('Read data from Excel', async () => {
     const workbook = new ExcelJS.Workbook();
-    await workbook.xlsx.readFile('/tests/utils/testdata.xlsx');
+    await workbook.xlsx.readFile('tests/utils/testdata.xlsx');
     const worksheet = workbook.getWorksheet('productDetails');
     worksheet.eachRow((row, rowNumber) => {
       if(rowNumber === 1) return; // Skip header row
